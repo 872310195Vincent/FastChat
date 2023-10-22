@@ -203,6 +203,8 @@ Here are the commands to follow in your terminal:
 #### Launch the controller
 ```bash
 python3 -m fastchat.serve.controller
+
+nohup python3 -m fastchat.serve.controller &
 ```
 
 This controller manages the distributed workers.
@@ -210,17 +212,24 @@ This controller manages the distributed workers.
 #### Launch the model worker(s)
 ```bash
 python3 -m fastchat.serve.model_worker --model-path lmsys/vicuna-7b-v1.3
+
+python3 -m fastchat.serve.model_worker --model-path /home/vincent/work/FastChat/models/CodeFuse-CodeLlama-34B-4bits
+
 ```
 Wait until the process finishes loading the model and you see "Uvicorn running on ...". The model worker will register itself to the controller .
 
 To ensure that your model worker is connected to your controller properly, send a test message using the following command:
 ```bash
 python3 -m fastchat.serve.test_message --model-name vicuna-7b-v1.3
+
+python3 -m fastchat.serve.test_message --model-name codefuse
 ```
 You will see a short output.
 
 #### Launch the Gradio web server
 ```bash
+python3 -m fastchat.serve.gradio_web_server
+
 python3 -m fastchat.serve.gradio_web_server
 ```
 

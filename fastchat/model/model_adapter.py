@@ -1686,8 +1686,53 @@ class XwinLMAdapter(BaseModelAdapter):
         return get_conv_template("vicuna_v1.1")
 
 
+class CodeFuseChatAdapter(BaseModelAdapter):
+    """The model adapter for Qwen/Qwen-7B-Chat
+    To run this model, you need to ensure additional flash attention installation:
+    ``` bash
+    git clone https://github.com/Dao-AILab/flash-attention
+    cd flash-attention && pip install .
+    pip install csrc/layer_norm
+    pip install csrc/rotary
+    ```
+
+    Since from 2.0, the following change happened
+    - `flash_attn_unpadded_func` -> `flash_attn_varlen_func`
+    - `flash_attn_unpadded_qkvpacked_func` -> `flash_attn_varlen_qkvpacked_func`
+    - `flash_attn_unpadded_kvpacked_func` -> `flash_attn_varlen_kvpacked_func`
+    You may need to revise the code in: https://huggingface.co/Qwen/Qwen-7B-Chat/blob/main/modeling_qwen.py#L69
+    to from flash_attn.flash_attn_interface import flash_attn_varlen_func as flash_attn_unpadded_func
+    """
+
+    def match(self, model_path: str):
+        return "codefuse" in model_path.lower()
+
+    def load_model(self, model_path: str, from_pretrained_kwargs: dict):
+        from auto_gptq import AutoGPTQForCausalLM
+        os.environ["TOKENIZERS_PARALLELISM"] = "false"
+        tokenizer = AutoTokenizer.from_pretrained(model_path, 
+                                            trust_remote_code=True, 
+                                            use_fast=False,
+                                            lagecy=False)
+        tokenizer.padding_side = "left"
+        tokenizer.pad_token_id = tokenizer.convert_tokens_to_ids("<unk>")
+        tokenizer.eos_token_id = tokenizer.convert_tokens_to_ids("</s>")
+        model = AutoGPTQForCausalLM.from_quantized(model_path, 
+                                                    inject_fused_attention=False,
+                                                    inject_fused_mlp=False,
+                                                    use_cuda_fp16=True,
+                                                    disable_exllama=False,
+                                                    device_map='auto'   # Support multi-gpus
+                                                )
+        return model, tokenizer
+
+    def get_default_conv_template(self, model_path: str) -> Conversation:
+        return get_conv_template("codefuse")
+    
+
 # Note: the registration order matters.
 # The one registered earlier has a higher matching priority.
+register_model_adapter(CodeFuseChatAdapter)
 register_model_adapter(PeftModelAdapter)
 register_model_adapter(VicunaAdapter)
 register_model_adapter(AiroborosAdapter)
