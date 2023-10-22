@@ -283,10 +283,10 @@ register_model_info(
     "InternLM is a multi-language large-scale language model (LLM), developed by SHLAB.",
 )
 register_model_info(
-    ["codefuse"],
+    ["CodeFuse-CodeLlama-34B-4bits"],
     "CodeFuse",
-    "https://huggingface.co/internlm/internlm-chat-7b",
-    "InternLM is a multi-language large-scale language model (LLM), developed by SHLAB.",
+    "https://huggingface.co/codefuse-ai/CodeFuse-CodeLlama-34B-4bits",
+    "CodeFuse is a LLM for coding, developed by codefuse-ai.",
 )
 register_model_info(
     ["Qwen-7B-Chat"],
