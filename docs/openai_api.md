@@ -24,7 +24,7 @@ python3 -m fastchat.serve.model_worker --model-path lmsys/vicuna-7b-v1.5
 Finally, launch the RESTful API server
 
 ```bash
-python3 -m fastchat.serve.openai_api_server --host localhost --port 8000
+python3 -m fastchat.serve.openai_api_server --host 0.0.0.0 --port 8000
 ```
 
 Now, let us test the API server.

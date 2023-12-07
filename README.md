@@ -215,26 +215,20 @@ This controller manages the distributed workers.
 
 #### Launch the model worker(s)
 ```bash
-<<<<<<< HEAD
 python3 -m fastchat.serve.model_worker --model-path lmsys/vicuna-7b-v1.3
 
 python3 -m fastchat.serve.model_worker --model-path /home/vincent/work/FastChat/models/CodeFuse-CodeLlama-34B-4bits
 
-=======
 python3 -m fastchat.serve.model_worker --model-path lmsys/vicuna-7b-v1.5
->>>>>>> d61d43e4e4f20268af415d71b8e946fe0112a4d1
 ```
 Wait until the process finishes loading the model and you see "Uvicorn running on ...". The model worker will register itself to the controller .
 
 To ensure that your model worker is connected to your controller properly, send a test message using the following command:
 ```bash
-<<<<<<< HEAD
 python3 -m fastchat.serve.test_message --model-name vicuna-7b-v1.3
 
 python3 -m fastchat.serve.test_message --model-name codefuse
-=======
 python3 -m fastchat.serve.test_message --model-name vicuna-7b-v1.5
->>>>>>> d61d43e4e4f20268af415d71b8e946fe0112a4d1
 ```
 You will see a short output.
 

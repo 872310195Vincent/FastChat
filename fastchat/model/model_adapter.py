@@ -1886,7 +1886,6 @@ class XwinLMAdapter(BaseModelAdapter):
         return get_conv_template("vicuna_v1.1")
 
 
-<<<<<<< HEAD
 class CodeFuseChatAdapter(BaseModelAdapter):
 
     def match(self, model_path: str):
@@ -1914,7 +1913,6 @@ class CodeFuseChatAdapter(BaseModelAdapter):
     def get_default_conv_template(self, model_path: str) -> Conversation:
         return get_conv_template("codefuse")
     
-=======
 class LemurAdapter(BaseModelAdapter):
     """The model adapter for OpenLemur/lemur-70b-chat-v1"""
 
@@ -1984,7 +1982,6 @@ class DeepseekChatAdapter(BaseModelAdapter):
     def get_default_conv_template(self, model_path: str) -> Conversation:
         return get_conv_template("deepseek-chat")
 
->>>>>>> decceed4cd2a36611639004193aab15633d4cf00
 
 # Note: the registration order matters.
 # The one registered earlier has a higher matching priority.
