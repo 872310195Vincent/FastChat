@@ -1682,22 +1682,6 @@ class XwinLMAdapter(BaseModelAdapter):
 
 
 class CodeFuseChatAdapter(BaseModelAdapter):
-    """The model adapter for Qwen/Qwen-7B-Chat
-    To run this model, you need to ensure additional flash attention installation:
-    ``` bash
-    git clone https://github.com/Dao-AILab/flash-attention
-    cd flash-attention && pip install .
-    pip install csrc/layer_norm
-    pip install csrc/rotary
-    ```
-
-    Since from 2.0, the following change happened
-    - `flash_attn_unpadded_func` -> `flash_attn_varlen_func`
-    - `flash_attn_unpadded_qkvpacked_func` -> `flash_attn_varlen_qkvpacked_func`
-    - `flash_attn_unpadded_kvpacked_func` -> `flash_attn_varlen_kvpacked_func`
-    You may need to revise the code in: https://huggingface.co/Qwen/Qwen-7B-Chat/blob/main/modeling_qwen.py#L69
-    to from flash_attn.flash_attn_interface import flash_attn_varlen_func as flash_attn_unpadded_func
-    """
 
     def match(self, model_path: str):
         return "codefuse" in model_path.lower()

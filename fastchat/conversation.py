@@ -1084,17 +1084,6 @@ register_conv_template(
     )
 )
 
-"""
-<|role_start|>human<|role_end|>Human 1st round input
-<|role_start|>bot<|role_end|>Bot 1st round output</s>
-<|role_start|>human<|role_end|>Human 2nd round input
-<|role_start|>bot<|role_end|>Bot 2nd round output</s>
-...
-...
-...
-<|role_start|>human<|role_end|>Human nth round input
-<|role_start|>bot<|role_end|>{Bot output to be genreated}</s>
-"""
 
 register_conv_template(
     Conversation(
